@@ -98,7 +98,7 @@ const Index = () => {
     <div className="min-h-screen bg-white p-4">
       <div className="bg-gray-200 p-4 mb-6">
         <h1 className="text-xl font-semibold text-gray-700">
-          Addition n°{questionNumber} : Effectuer des additions posées
+          Addition n°{questionNumber} : Effectue l'addition ci-dessous.
         </h1>
       </div>
 
