@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import FinalMessage from '@/components/FinalMessage';
+import ScoreDisplay from '@/components/ScoreDisplay';
 
 const Index = () => {
   const [score, setScore] = useState(0);
@@ -15,7 +17,6 @@ const Index = () => {
   const [showContinue, setShowContinue] = useState(false);
 
   const generateNumbers = () => {
-    // Ensure first digit is not zero for both numbers
     const minFirstDigit = 1;
     const maxFirstDigit = 9;
     const firstDigitTop = Math.floor(Math.random() * (maxFirstDigit - minFirstDigit + 1)) + minFirstDigit;
@@ -44,14 +45,6 @@ const Index = () => {
     const newAnswer = [...userAnswer];
     newAnswer[index] = value;
     setUserAnswer(newAnswer);
-  };
-
-  const getFinalMessage = () => {
-    if (score === 5) return "Bravo ! Performance très satisfaisante !";
-    if (score === 4) return "Bravo ! Performance satisfaisante !";
-    if (score === 3) return "Performance insuffisante ! Tu dois encore t'entraîner, clique sur Recommencer";
-    if (score === 2) return "Performance très insuffisante ! Tu dois encore t'entraîner, clique sur Recommencer";
-    return "Performance très insuffisante ! Tu dois encore t'entraîner, clique sur Recommencer";
   };
 
   const checkAnswer = () => {
@@ -194,15 +187,8 @@ const Index = () => {
       </Card>
 
       <div className="mt-6 text-center">
-        <p className="text-lg font-bold">
-          Mon score : {score} sur {questionNumber}
-        </p>
-        
-        {isComplete && (
-          <Alert className="mt-4 max-w-2xl mx-auto">
-            <AlertDescription>{getFinalMessage()}</AlertDescription>
-          </Alert>
-        )}
+        <ScoreDisplay score={score} questionNumber={questionNumber} />
+        <FinalMessage score={score} isComplete={isComplete} />
       </div>
     </div>
   );
