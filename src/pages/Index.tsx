@@ -15,8 +15,18 @@ const Index = () => {
   const [showContinue, setShowContinue] = useState(false);
 
   const generateNumbers = () => {
-    const top = Math.floor(Math.random() * 1000);
-    const bottom = Math.floor(Math.random() * 1000);
+    // Ensure first digit is not zero for both numbers
+    const minFirstDigit = 1;
+    const maxFirstDigit = 9;
+    const firstDigitTop = Math.floor(Math.random() * (maxFirstDigit - minFirstDigit + 1)) + minFirstDigit;
+    const firstDigitBottom = Math.floor(Math.random() * (maxFirstDigit - minFirstDigit + 1)) + minFirstDigit;
+    
+    const remainingDigitsTop = Math.floor(Math.random() * 90);
+    const remainingDigitsBottom = Math.floor(Math.random() * 90);
+    
+    const top = firstDigitTop * 100 + remainingDigitsTop;
+    const bottom = firstDigitBottom * 100 + remainingDigitsBottom;
+    
     setNumbers({ top, bottom });
   };
 
@@ -34,6 +44,14 @@ const Index = () => {
     const newAnswer = [...userAnswer];
     newAnswer[index] = value;
     setUserAnswer(newAnswer);
+  };
+
+  const getFinalMessage = () => {
+    if (score === 5) return "Bravo ! Performance très satisfaisante !";
+    if (score === 4) return "Bravo ! Performance satisfaisante !";
+    if (score === 3) return "Performance insuffisante ! Tu dois encore t'entraîner, clique sur Recommencer";
+    if (score === 2) return "Performance très insuffisante ! Tu dois encore t'entraîner, clique sur Recommencer";
+    return "Performance très insuffisante ! Tu dois encore t'entraîner, clique sur Recommencer";
   };
 
   const checkAnswer = () => {
@@ -71,13 +89,6 @@ const Index = () => {
     }
   };
 
-  const getFinalMessage = () => {
-    if (score === 5) return "Bravo ! Performance très satisfaisante !";
-    if (score === 4) return "Bravo ! Performance satisfaisante !";
-    if (score === 3) return "Performance insuffisante ! Tu dois encore t'entraîner";
-    return "Performance très insuffisante ! Tu dois encore t'entraîner";
-  };
-
   const restart = () => {
     setScore(0);
     setQuestionNumber(1);
@@ -108,20 +119,29 @@ const Index = () => {
                   key={`carry-${index}`}
                   type="text"
                   maxLength={1}
-                  className="w-10 h-10 text-center border rounded"
+                  className="w-6 h-6 text-center border rounded text-sm"
                   value={carry}
                   onChange={(e) => handleCarryInput(index, e.target.value)}
+                  style={{ marginLeft: 'auto', marginRight: '0' }}
                 />
               ))}
             </div>
 
-            {/* Numbers */}
+            {/* Numbers display grid */}
             <div className="col-span-4 grid grid-cols-4 gap-2 mb-4">
-              <div className="col-span-4 text-right pr-4">
-                {numbers.top.toString().padStart(4, '0')}
+              <div className="col-span-4 grid grid-cols-4 gap-2">
+                {numbers.top.toString().padStart(4, '0').split('').map((digit, index) => (
+                  <div key={`top-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white">
+                    {digit}
+                  </div>
+                ))}
               </div>
-              <div className="col-span-4 text-right pr-4 border-b-2 border-black">
-                + {numbers.bottom.toString().padStart(4, '0')}
+              <div className="col-span-4 grid grid-cols-4 gap-2 border-b-2 border-black">
+                {numbers.bottom.toString().padStart(4, '0').split('').map((digit, index) => (
+                  <div key={`bottom-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white">
+                    {digit}
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -147,20 +167,26 @@ const Index = () => {
           )}
 
           <div className="flex justify-end mt-4">
-            {!showContinue ? (
-              <Button onClick={checkAnswer} className="bg-green-600 hover:bg-green-700">
-                Valider
-              </Button>
+            {!isComplete ? (
+              !showContinue ? (
+                <Button onClick={checkAnswer} className="bg-green-600 hover:bg-green-700">
+                  Valider
+                </Button>
+              ) : (
+                <Button onClick={() => {
+                  setShowContinue(false);
+                  setQuestionNumber(questionNumber + 1);
+                  setUserAnswer(['', '', '', '']);
+                  setCarries(['', '']);
+                  setMessage('');
+                  setAttempts(0);
+                }} className="bg-blue-600 hover:bg-blue-700">
+                  Continuer
+                </Button>
+              )
             ) : (
-              <Button onClick={() => {
-                setShowContinue(false);
-                setQuestionNumber(questionNumber + 1);
-                setUserAnswer(['', '', '', '']);
-                setCarries(['', '']);
-                setMessage('');
-                setAttempts(0);
-              }} className="bg-blue-600 hover:bg-blue-700">
-                Continuer
+              <Button onClick={restart} className="bg-blue-600 hover:bg-blue-700">
+                Recommencer
               </Button>
             )}
           </div>
@@ -173,14 +199,9 @@ const Index = () => {
         </p>
         
         {isComplete && (
-          <>
-            <Alert className="mt-4 max-w-2xl mx-auto">
-              <AlertDescription>{getFinalMessage()}</AlertDescription>
-            </Alert>
-            <Button onClick={restart} className="mt-4">
-              Recommencer
-            </Button>
-          </>
+          <Alert className="mt-4 max-w-2xl mx-auto">
+            <AlertDescription>{getFinalMessage()}</AlertDescription>
+          </Alert>
         )}
       </div>
     </div>
