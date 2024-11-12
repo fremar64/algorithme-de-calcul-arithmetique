@@ -106,42 +106,41 @@ const Index = () => {
         <CardContent className="p-6">
           <div className="grid grid-cols-4 gap-2 text-center text-2xl mb-4">
             {/* Carries */}
-            <div className="col-span-4 grid grid-cols-4 gap-2 mb-2">
+            <div className="col-span-4 grid grid-cols-4 gap-1 mb-2">
               {carries.map((carry, index) => (
                 <input
                   key={`carry-${index}`}
                   type="text"
                   maxLength={1}
-                  className="w-6 h-6 text-center border rounded text-sm"
+                  className="w-6 h-6 text-center border rounded text-sm ml-auto"
                   value={carry}
                   onChange={(e) => handleCarryInput(index, e.target.value)}
-                  style={{ marginLeft: 'auto', marginRight: '0' }}
                 />
               ))}
             </div>
 
             {/* Numbers display grid */}
-            <div className="col-span-4 grid grid-cols-4 gap-2 mb-4">
-              <div className="col-span-4 grid grid-cols-4 gap-2">
+            <div className="col-span-4 grid grid-cols-4 gap-1 mb-4 relative">
+              <div className="col-span-4 grid grid-cols-4 gap-1">
                 {numbers.top.toString().padStart(4, '0').split('').map((digit, index) => (
                   <div key={`top-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white">
                     {digit}
                   </div>
                 ))}
               </div>
-              <div className="col-span-4 grid grid-cols-4 gap-2">
-                <div className="col-span-1 w-12 h-12 flex items-center justify-center text-2xl">+</div>
+              <div className="absolute left-[-2rem] top-[3.7rem] text-2xl">+</div>
+              <div className="col-span-4 grid grid-cols-4 gap-1">
                 {numbers.bottom.toString().padStart(4, '0').split('').map((digit, index) => (
                   <div key={`bottom-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white">
                     {digit}
                   </div>
                 ))}
               </div>
-              <div className="col-span-4 border-b-2 border-black"></div>
+              <div className="col-span-4 border-b-2 border-black mt-2"></div>
             </div>
 
             {/* Answer inputs */}
-            <div className="col-span-4 grid grid-cols-4 gap-2">
+            <div className="col-span-4 grid grid-cols-4 gap-1">
               {userAnswer.map((digit, index) => (
                 <input
                   key={`answer-${index}`}
