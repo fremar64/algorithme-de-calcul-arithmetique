@@ -129,13 +129,15 @@ const Index = () => {
                   </div>
                 ))}
               </div>
-              <div className="col-span-4 grid grid-cols-4 gap-2 border-b-2 border-black">
+              <div className="col-span-4 grid grid-cols-4 gap-2">
+                <div className="col-span-1 w-12 h-12 flex items-center justify-center text-2xl">+</div>
                 {numbers.bottom.toString().padStart(4, '0').split('').map((digit, index) => (
                   <div key={`bottom-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white">
                     {digit}
                   </div>
                 ))}
               </div>
+              <div className="col-span-4 border-b-2 border-black"></div>
             </div>
 
             {/* Answer inputs */}
