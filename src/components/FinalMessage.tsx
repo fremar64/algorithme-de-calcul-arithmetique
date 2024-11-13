@@ -6,18 +6,14 @@ interface FinalMessageProps {
 }
 
 export const getFinalMessage = (score: number): string => {
-  switch (score) {
-    case 5:
-      return "Bravo ! Performance très satisfaisante !";
-    case 4:
-      return "Bravo ! Performance satisfaisante !";
-    case 3:
-      return "Performance insuffisante ! Tu dois encore t'entraîner, clique sur Recommencer";
-    case 2:
-    case 1:
-      return "Performance très insuffisante ! Il faut encore t'entraîner, clique sur Recommencer";
-    default:
-      return "Performance très insuffisante ! Il faut encore t'entraîner, clique sur Recommencer";
+  if (score === 10) {
+    return "Performance très satisfaisante";
+  } else if (score >= 8) {
+    return "Performance satisfaisante";
+  } else if (score >= 5) {
+    return "Performance insuffisante";
+  } else {
+    return "Performance très insuffisante";
   }
 };
 
