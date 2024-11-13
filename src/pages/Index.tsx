@@ -97,9 +97,16 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white p-4">
       <div className="bg-gray-200 p-4 mb-6">
-        <h1 className="text-xl font-semibold text-gray-700">
-          Addition n°{questionNumber} : Effectue l'addition ci-dessous.
-        </h1>
+        <div className="flex items-center gap-4 max-w-2xl mx-auto">
+          <img 
+            src="/ceredis-logo.svg" 
+            alt="Ceredis Logo" 
+            className="h-12 w-auto"
+          />
+          <h1 className="text-xl font-semibold text-gray-700">
+            Addition n°{questionNumber} : Effectue l'addition ci-dessous.
+          </h1>
+        </div>
       </div>
 
       <Card className="max-w-2xl mx-auto bg-[#FFF8DC]">
