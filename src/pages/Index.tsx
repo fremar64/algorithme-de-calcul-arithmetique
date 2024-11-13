@@ -109,7 +109,7 @@ const Index = () => {
         </div>
       </div>
 
-      <Card className="max-w-2xl mx-auto bg-[#FFF8DC]">
+      <Card className="max-w-2xl mx-auto bg-[#DAE7ED]">
         <CardContent className="p-6">
           <div className="grid grid-cols-4 gap-2 text-center text-2xl mb-4">
             {/* Carries */}
