@@ -104,7 +104,7 @@ const Subtraction = () => {
 
       <Card className="max-w-2xl mx-auto bg-[#FFF8DC]">
         <CardContent className="p-6">
-          <div className="grid grid-cols-4 gap-2 text-center text-2xl mb-4">
+          <div className="grid grid-cols-4 gap-1 text-center text-2xl mb-4">
             {/* Borrows */}
             <div className="col-span-4 grid grid-cols-4 gap-1 mb-2">
               {borrows.map((borrow, index) => (
