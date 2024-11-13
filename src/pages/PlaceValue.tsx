@@ -107,9 +107,14 @@ const PlaceValue = () => {
             alt="Ceredis Logo" 
             className="h-12 w-auto"
           />
-          <h1 className="text-xl font-semibold text-gray-700">
-            Question N°{questionNumber} : Place des chiffres dans un nombre
-          </h1>
+          <div className="space-y-1">
+            <h1 className="text-xl font-semibold text-gray-700">
+              Position des chiffres dans un nombre
+            </h1>
+            <p className="text-sm text-gray-600">
+              Question N°{questionNumber} : Place des chiffres dans un nombre
+            </p>
+          </div>
         </div>
       </div>
 
