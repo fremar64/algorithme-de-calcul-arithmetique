@@ -99,7 +99,7 @@ const Index = () => {
       <div className="bg-gray-200 p-4 mb-6">
         <div className="flex items-center gap-4 max-w-2xl mx-auto">
           <img 
-            src="/ceredis-logo.svg" 
+            src="/ceredis.png" 
             alt="Ceredis Logo" 
             className="h-12 w-auto"
           />
