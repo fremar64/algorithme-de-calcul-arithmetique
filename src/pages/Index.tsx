@@ -96,7 +96,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white p-4">
-      <div className="bg-gray-200 p-4 mb-6">
+      <div className="bg-cornflowerblue-200 p-4 mb-6">
         <div className="flex items-center gap-12 max-w-2xl mx-auto">
           <img 
             src="/ceredis.png" 
