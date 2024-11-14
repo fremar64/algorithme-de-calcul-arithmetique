@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Addition from "./apps/addition/Index";
 import Subtraction from "./apps/subtraction/Subtraction";
 import PlaceValue from "./apps/place-value/PlaceValue";
+import PlaceValueSmall from "./apps/place-value-small/PlaceValueSmall";
 import Home from "./pages/Home";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/addition" element={<Addition />} />
           <Route path="/subtraction" element={<Subtraction />} />
           <Route path="/place-value" element={<PlaceValue />} />
+          <Route path="/place-value-small" element={<PlaceValueSmall />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
