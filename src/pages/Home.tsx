@@ -39,6 +39,11 @@ const Home = () => {
               Position des chiffres : nombres inférieurs à 1000
             </Button>
           </Link>
+          <Link to="/number-writing">
+            <Button className="w-full h-32 text-lg">
+              Écrire les nombres en chiffres
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

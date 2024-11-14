@@ -7,6 +7,7 @@ import Addition from "./apps/addition/Index";
 import Subtraction from "./apps/subtraction/Subtraction";
 import PlaceValue from "./apps/place-value/PlaceValue";
 import PlaceValueSmall from "./apps/place-value-small/PlaceValueSmall";
+import NumberWriting from "./apps/number-writing/NumberWriting";
 import Home from "./pages/Home";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/subtraction" element={<Subtraction />} />
           <Route path="/place-value" element={<PlaceValue />} />
           <Route path="/place-value-small" element={<PlaceValueSmall />} />
+          <Route path="/number-writing" element={<NumberWriting />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
