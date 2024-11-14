@@ -36,7 +36,7 @@ const Home = () => {
           </Link>
           <Link to="/place-value-small">
             <Button className="w-full h-32 text-lg">
-              Position des chiffres : nombres inférieurs à 1000
+              Position des chiffres : <br></br>nombres inférieurs à 1000
             </Button>
           </Link>
           <Link to="/number-writing">
