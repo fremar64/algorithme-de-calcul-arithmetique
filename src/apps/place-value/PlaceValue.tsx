@@ -1,4 +1,3 @@
-// Move existing PlaceValue.tsx content here
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -26,6 +25,7 @@ const PlaceValue = () => {
   const [score, setScore] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [currentNumber, setCurrentNumber] = useState('');
+  const [userDigits, setUserDigits] = useState<string[]>([]);
   const [placeValue, setPlaceValue] = useState('');
   const [answer, setAnswer] = useState('');
   const [correctAnswer, setCorrectAnswer] = useState('');
@@ -34,21 +34,38 @@ const PlaceValue = () => {
   const [isComplete, setIsComplete] = useState(false);
 
   const generateQuestion = () => {
-    const digits = Array.from({ length: 12 }, () => Math.floor(Math.random() * 10));
-    const number = digits.join('');
-    const placeValueIndex = Math.floor(Math.random() * 12);
+    // Generate a random number between 100 and 999,999,999,999
+    const minDigits = 3;
+    const maxDigits = 12;
+    const numDigits = Math.floor(Math.random() * (maxDigits - minDigits + 1)) + minDigits;
     
-    setCurrentNumber(number);
+    const digits = Array.from({ length: numDigits }, () => Math.floor(Math.random() * 10));
+    if (digits[0] === 0) digits[0] = Math.floor(Math.random() * 9) + 1; // Ensure first digit isn't 0
+    
+    const number = digits.join('').padStart(12, '0');
+    const formattedNumber = number.replace(/(\d{3})(?=\d)/g, '$1 ').trim();
+    
+    const placeValueIndex = Math.floor(Math.random() * numDigits);
+    
+    setCurrentNumber(formattedNumber);
     setPlaceValue(PLACE_VALUES[placeValueIndex]);
-    setCorrectAnswer(digits[placeValueIndex].toString());
+    setCorrectAnswer(digits[digits.length - 1 - placeValueIndex].toString());
     setAnswer('');
     setMessage('');
     setAttempts(0);
+    setUserDigits(Array(12).fill(''));
   };
 
   useEffect(() => {
     generateQuestion();
   }, [questionNumber]);
+
+  const handleDigitInput = (index: number, value: string) => {
+    if (!/^\d*$/.test(value)) return;
+    const newDigits = [...userDigits];
+    newDigits[index] = value;
+    setUserDigits(newDigits);
+  };
 
   const handleAnswerSubmit = () => {
     if (!answer) {
@@ -96,6 +113,7 @@ const PlaceValue = () => {
     setAnswer('');
     setMessage('');
     setAttempts(0);
+    setUserDigits(Array(12).fill(''));
     generateQuestion();
   };
 
@@ -122,7 +140,9 @@ const PlaceValue = () => {
       <div className="max-w-4xl mx-auto space-y-6">
         <NumberTable 
           number={currentNumber}
-          onDigitInput={() => {}}
+          onDigitInput={handleDigitInput}
+          userInputMode={true}
+          userDigits={userDigits}
         />
 
         <QuestionDisplay

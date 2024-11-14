@@ -4,9 +4,11 @@ import { Input } from "@/components/ui/input";
 interface NumberTableProps {
   number: string;
   onDigitInput: (index: number, value: string) => void;
+  userInputMode?: boolean;
+  userDigits?: string[];
 }
 
-const NumberTable = ({ number, onDigitInput }: NumberTableProps) => {
+const NumberTable = ({ number, onDigitInput, userInputMode = true, userDigits = [] }: NumberTableProps) => {
   const digits = number.padStart(12, '0').split('');
 
   return (
@@ -14,28 +16,28 @@ const NumberTable = ({ number, onDigitInput }: NumberTableProps) => {
       <table className="w-full border-collapse">
         <thead>
           <tr>
-            <th colSpan={3} className="text-center border p-2">Billions</th>
+            <th colSpan={3} className="text-center border p-2">Milliards</th>
             <th colSpan={3} className="text-center border p-2">Millions</th>
-            <th colSpan={3} className="text-center border p-2">Thousands</th>
-            <th colSpan={3} className="text-center border p-2">Units</th>
+            <th colSpan={3} className="text-center border p-2">Mille</th>
+            <th colSpan={3} className="text-center border p-2">Unités</th>
           </tr>
           <tr>
-            {['H', 'T', 'U'].map((unit, index) => (
+            {['C', 'D', 'U'].map((unit, index) => (
               <React.Fragment key={`billions-${unit}`}>
                 <th className="border p-2">{unit}</th>
               </React.Fragment>
             ))}
-            {['H', 'T', 'U'].map((unit, index) => (
+            {['C', 'D', 'U'].map((unit, index) => (
               <React.Fragment key={`millions-${unit}`}>
                 <th className="border p-2">{unit}</th>
               </React.Fragment>
             ))}
-            {['H', 'T', 'U'].map((unit, index) => (
+            {['C', 'D', 'U'].map((unit, index) => (
               <React.Fragment key={`thousands-${unit}`}>
                 <th className="border p-2">{unit}</th>
               </React.Fragment>
             ))}
-            {['H', 'T', 'U'].map((unit, index) => (
+            {['C', 'D', 'U'].map((unit, index) => (
               <React.Fragment key={`units-${unit}`}>
                 <th className="border p-2">{unit}</th>
               </React.Fragment>
@@ -44,13 +46,13 @@ const NumberTable = ({ number, onDigitInput }: NumberTableProps) => {
         </thead>
         <tbody>
           <tr>
-            {digits.map((digit, index) => (
+            {Array(12).fill(0).map((_, index) => (
               <td key={index} className="border p-2">
                 <Input
                   type="text"
                   maxLength={1}
                   className="w-12 h-12 text-center text-xl"
-                  value={digit}
+                  value={userInputMode ? (userDigits[index] || '') : digits[index]}
                   onChange={(e) => onDigitInput(index, e.target.value)}
                 />
               </td>
