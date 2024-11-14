@@ -92,7 +92,7 @@ const Subtraction = () => {
       <div className="bg-gray-200 p-4 mb-6">
         <div className="flex items-center gap-4 max-w-2xl mx-auto">
           <img 
-            src="/ceredis-logo.svg" 
+            src="/ceredis.png" 
             alt="Ceredis Logo" 
             className="h-12 w-auto"
           />
@@ -102,7 +102,7 @@ const Subtraction = () => {
         </div>
       </div>
 
-      <Card className="max-w-2xl mx-auto bg-[#FFF8DC]">
+      <Card className="max-w-2xl mx-auto bg-[#DAE7ED]">
         <CardContent className="p-6">
           <div className="grid grid-cols-4 gap-2 text-center text-2xl mb-4">
             {/* Borrows */}
