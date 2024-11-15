@@ -29,6 +29,16 @@ const Home = () => {
               Soustractions posées
             </Button>
           </Link>
+          <Link to="/multiplication-ce2">
+            <Button className="w-full h-32 text-lg">
+              Multiplications posées (CE2)
+            </Button>
+          </Link>
+          <Link to="/multiplication-ce1">
+            <Button className="w-full h-32 text-lg">
+              Multiplications posées (CE1)
+            </Button>
+          </Link>
           <Link to="/place-value">
             <Button className="w-full h-32 text-lg">
               Position des chiffres
