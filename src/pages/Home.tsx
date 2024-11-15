@@ -44,6 +44,11 @@ const Home = () => {
               Écrire les nombres en chiffres
             </Button>
           </Link>
+          <Link to="/number-writing-ce1">
+            <Button className="w-full h-32 text-lg">
+              Écrire les nombres en chiffres (CE1)
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
