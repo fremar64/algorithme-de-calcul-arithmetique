@@ -4,46 +4,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import NumberTable from '@/components/NumberTable';
 import FinalMessage from '@/components/FinalMessage';
 import ScoreDisplay from '@/components/ScoreDisplay';
-
-// Function to convert numbers to French words
-const numberToFrenchWords = (num: number): string => {
-  // This is a simplified version - you might want to use a library for production
-  const units = ['', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf'];
-  const teens = ['dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'];
-  const tens = ['', 'dix', 'vingt', 'trente', 'quarante', 'cinquante', 'soixante', 'soixante-dix', 'quatre-vingt', 'quatre-vingt-dix'];
-  
-  if (num === 0) return 'zéro';
-  
-  const numStr = num.toString();
-  let result = '';
-  
-  if (num >= 1000) {
-    const thousands = Math.floor(num / 1000);
-    if (thousands > 1) result += numberToFrenchWords(thousands) + ' ';
-    result += 'mille ';
-    num %= 1000;
-  }
-  
-  if (num >= 100) {
-    const hundreds = Math.floor(num / 100);
-    if (hundreds > 1) result += units[hundreds] + ' cent ';
-    else if (hundreds === 1) result += 'cent ';
-    num %= 100;
-  }
-  
-  if (num >= 20) {
-    const ten = Math.floor(num / 10);
-    result += tens[ten];
-    const unit = num % 10;
-    if (unit > 0) result += '-' + units[unit];
-  } else if (num >= 10) {
-    result += teens[num - 10];
-  } else if (num > 0) {
-    result += units[num];
-  }
-  
-  return result.trim();
-};
+import QuestionPrompt from '@/components/QuestionPrompt';
+import { numberToFrenchWords } from '@/utils/numberToFrenchWords';
 
 const NumberWriting = () => {
   const [score, setScore] = useState(0);
@@ -73,7 +35,6 @@ const NumberWriting = () => {
   }, [questionNumber]);
 
   const validateNumberFormat = (input: string): boolean => {
-    // Check if the number has proper spacing between classes
     const correctFormat = currentNumber.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     return input === correctFormat;
   };
@@ -166,18 +127,11 @@ const NumberWriting = () => {
         />
 
         <div className="space-y-4">
-          <div className="flex items-center gap-4">
-            <p className="text-lg">
-              Le nombre <span className="text-xl font-semibold text-blue-600">{currentNumberInWords}</span> s'écrit en chiffres :
-            </p>
-            <input
-              type="text"
-              className="w-40 h-10 px-3 border rounded"
-              value={userAnswer}
-              onChange={(e) => setUserAnswer(e.target.value)}
-              maxLength={15}
-            />
-          </div>
+          <QuestionPrompt
+            numberInWords={currentNumberInWords}
+            userAnswer={userAnswer}
+            onAnswerChange={setUserAnswer}
+          />
 
           {message && (
             <Alert>
