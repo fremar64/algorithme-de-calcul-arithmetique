@@ -4,13 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import FinalMessage from '@/components/FinalMessage';
 import ScoreDisplay from '@/components/ScoreDisplay';
+import { NumberDisplay } from './components/NumberDisplay';
+import { PartialProducts } from './components/PartialProducts';
 
 const MultiplicationCE1 = () => {
   const [score, setScore] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [numbers, setNumbers] = useState({ multiplicand: 0, multiplier: 0 });
-  const [userAnswer, setUserAnswer] = useState(['', '', '', '', '']);
-  const [carries, setCarries] = useState(['', '', '', '']);
+  const [userAnswer, setUserAnswer] = useState<string[]>([]);
+  const [carries, setCarries] = useState<string[]>([]);
   const [message, setMessage] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
@@ -92,6 +94,13 @@ const MultiplicationCE1 = () => {
     generateNumbers();
   };
 
+  const getMaxLength = () => {
+    const result = (numbers.multiplicand * numbers.multiplier).toString().length;
+    return Math.max(result, numbers.multiplicand.toString().length);
+  };
+
+  const getMultiplierLength = () => numbers.multiplier.toString().length;
+
   return (
     <div className="min-h-screen bg-white p-4">
       <div className="bg-gray-200 p-4 mb-6">
@@ -109,85 +118,70 @@ const MultiplicationCE1 = () => {
 
       <Card className="max-w-2xl mx-auto bg-[#DAE7ED]">
         <CardContent className="p-6">
-          <div className="grid grid-cols-5 gap-1 text-center text-2xl mb-4">
-            {/* Carries */}
-            <div className="col-span-5 grid grid-cols-5 gap-1 mb-2">
-              {carries.map((carry, index) => (
-                <input
-                  key={`carry-${index}`}
-                  type="text"
-                  maxLength={1}
-                  className="w-6 h-6 text-center border rounded text-sm ml-auto"
-                  value={carry}
-                  onChange={(e) => handleCarryInput(index, e.target.value)}
-                />
-              ))}
-            </div>
-
-            {/* Numbers display grid */}
-            <div className="col-span-5 grid grid-cols-5 gap-1 mb-4 relative">
-              <div className="col-span-5 grid grid-cols-5 gap-1">
-                {numbers.multiplicand.toString().padStart(5, '0').split('').map((digit, index) => (
-                  <div key={`multiplicand-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white">
-                    {digit}
-                  </div>
-                ))}
-              </div>
+          <div className="space-y-4">
+            <div className="relative">
+              <NumberDisplay number={numbers.multiplicand} maxLength={getMaxLength()} />
               <div className="absolute left-[-2rem] top-[3.7rem] text-2xl">×</div>
-              <div className="col-span-5 grid grid-cols-5 gap-1">
-                {numbers.multiplier.toString().padStart(5, '0').split('').map((digit, index) => (
-                  <div key={`multiplier-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white">
-                    {digit}
-                  </div>
+              <NumberDisplay number={numbers.multiplier} maxLength={getMaxLength()} />
+              <div className="border-b-2 border-black mt-2" />
+              
+              {/* Partial Products */}
+              <PartialProducts 
+                multiplierLength={getMultiplierLength()}
+                maxLength={getMaxLength()}
+                carries={carries}
+                onCarryInput={handleCarryInput}
+              />
+              
+              {/* Final Answer */}
+              <div className="border-b-2 border-black mt-2" />
+              <div className="flex gap-1">
+                {Array(getMaxLength()).fill(0).map((_, index) => (
+                  <input
+                    key={`answer-${index}`}
+                    type="text"
+                    maxLength={1}
+                    className="w-12 h-12 text-center border rounded"
+                    value={userAnswer[index] || ''}
+                    onChange={(e) => handleAnswerInput(index, e.target.value)}
+                  />
                 ))}
               </div>
-              <div className="col-span-5 border-b-2 border-black mt-2"></div>
             </div>
 
-            {/* Answer inputs */}
-            <div className="col-span-5 grid grid-cols-5 gap-1">
-              {userAnswer.map((digit, index) => (
-                <input
-                  key={`answer-${index}`}
-                  type="text"
-                  maxLength={1}
-                  className="w-12 h-12 text-center border rounded"
-                  value={digit}
-                  onChange={(e) => handleAnswerInput(index, e.target.value)}
-                />
-              ))}
-            </div>
-          </div>
-
-          {message && (
-            <Alert className="mt-4">
-              <AlertDescription>{message}</AlertDescription>
-            </Alert>
-          )}
-
-          <div className="flex justify-end mt-4">
-            {!isComplete ? (
-              !showContinue ? (
-                <Button onClick={checkAnswer} className="bg-green-600 hover:bg-green-700">
-                  Valider
-                </Button>
-              ) : (
-                <Button onClick={() => {
-                  setShowContinue(false);
-                  setQuestionNumber(questionNumber + 1);
-                  setUserAnswer(['', '', '', '', '']);
-                  setCarries(['', '', '', '']);
-                  setMessage('');
-                  setAttempts(0);
-                }} className="bg-blue-600 hover:bg-blue-700">
-                  Continuer
-                </Button>
-              )
-            ) : (
-              <Button onClick={restart} className="bg-blue-600 hover:bg-blue-700">
-                Recommencer
-              </Button>
+            {message && (
+              <Alert>
+                <AlertDescription>{message}</AlertDescription>
+              </Alert>
             )}
+
+            <div className="flex justify-end">
+              {!isComplete ? (
+                !showContinue ? (
+                  <Button onClick={checkAnswer} className="bg-green-600 hover:bg-green-700">
+                    Valider
+                  </Button>
+                ) : (
+                  <Button 
+                    onClick={() => {
+                      setShowContinue(false);
+                      setQuestionNumber(questionNumber + 1);
+                      setUserAnswer([]);
+                      setCarries([]);
+                      setMessage('');
+                      setAttempts(0);
+                    }} 
+                    className="bg-blue-600 hover:bg-blue-700"
+                  >
+                    Continuer
+                  </Button>
+                )
+              ) : (
+                <Button onClick={restart} className="bg-blue-600 hover:bg-blue-700">
+                  Recommencer
+                </Button>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
