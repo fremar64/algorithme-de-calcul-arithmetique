@@ -48,7 +48,8 @@ const MultiplicationCE1 = () => {
   };
 
   const checkAnswer = () => {
-    const correctAnswer = (numbers.multiplicand * numbers.multiplier).toString().padStart(5, '0');
+    const result = numbers.multiplicand * numbers.multiplier;
+    const correctAnswer = result.toString();
     const userAnswerString = userAnswer.join('');
     
     if (userAnswerString === '') {
@@ -64,8 +65,8 @@ const MultiplicationCE1 = () => {
       } else {
         setTimeout(() => {
           setQuestionNumber(questionNumber + 1);
-          setUserAnswer(['', '', '', '', '']);
-          setCarries(['', '', '', '']);
+          setUserAnswer([]);
+          setCarries([]);
           setMessage('');
           setAttempts(0);
         }, 1500);
@@ -94,22 +95,11 @@ const MultiplicationCE1 = () => {
     generateNumbers();
   };
 
-  const getMaxLength = () => {
-    const result = (numbers.multiplicand * numbers.multiplier).toString().length;
-    return Math.max(result, numbers.multiplicand.toString().length);
-  };
-
-  const getMultiplierLength = () => numbers.multiplier.toString().length;
-
   return (
     <div className="min-h-screen bg-white p-4">
       <div className="bg-gray-200 p-4 mb-6">
         <div className="flex items-center gap-12 max-w-2xl mx-auto">
-          <img 
-            src="/ceredis.png" 
-            alt="Ceredis Logo" 
-            className="h-12 w-auto"
-          />
+          <img src="/ceredis.png" alt="Ceredis Logo" className="h-12 w-auto" />
           <h1 className="text-xl font-semibold text-gray-700">
             Multiplication n°{questionNumber} : Effectue la multiplication ci-dessous.
           </h1>
@@ -119,29 +109,27 @@ const MultiplicationCE1 = () => {
       <Card className="max-w-2xl mx-auto bg-[#DAE7ED]">
         <CardContent className="p-6">
           <div className="space-y-4">
-            <div className="relative">
-              <NumberDisplay number={numbers.multiplicand} maxLength={getMaxLength()} />
-              <div className="absolute left-[-2rem] top-[3.7rem] text-2xl">×</div>
-              <NumberDisplay number={numbers.multiplier} maxLength={getMaxLength()} />
+            <div className="relative pl-8">
+              <NumberDisplay number={numbers.multiplicand} maxLength={5} />
+              <div className="absolute left-0 top-[3.7rem] text-2xl">×</div>
+              <NumberDisplay number={numbers.multiplier} maxLength={5} />
               <div className="border-b-2 border-black mt-2" />
               
-              {/* Partial Products */}
               <PartialProducts 
-                multiplierLength={getMultiplierLength()}
-                maxLength={getMaxLength()}
+                multiplierLength={numbers.multiplier.toString().length}
+                multiplicandLength={numbers.multiplicand.toString().length}
                 carries={carries}
                 onCarryInput={handleCarryInput}
               />
               
-              {/* Final Answer */}
               <div className="border-b-2 border-black mt-2" />
-              <div className="flex gap-1">
-                {Array(getMaxLength()).fill(0).map((_, index) => (
+              <div className="flex justify-end gap-1">
+                {Array(numbers.multiplicand.toString().length + 1).fill(0).map((_, index) => (
                   <input
                     key={`answer-${index}`}
                     type="text"
                     maxLength={1}
-                    className="w-12 h-12 text-center border rounded"
+                    className="w-12 h-12 text-center border rounded text-2xl"
                     value={userAnswer[index] || ''}
                     onChange={(e) => handleAnswerInput(index, e.target.value)}
                   />
