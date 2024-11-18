@@ -59,6 +59,21 @@ const Home = () => {
               Écrire les nombres en chiffres (CE1)
             </Button>
           </Link>
+          <Link to="/number-writing-cp2">
+            <Button className="w-full h-32 text-lg">
+              Écrire les nombres en chiffres (CP2)
+            </Button>
+          </Link>
+          <Link to="/number-writing-cm1">
+            <Button className="w-full h-32 text-lg">
+              Écrire les nombres en chiffres (CM1)
+            </Button>
+          </Link>
+          <Link to="/number-writing-cm2">
+            <Button className="w-full h-32 text-lg">
+              Écrire les nombres en chiffres (CM2)
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
