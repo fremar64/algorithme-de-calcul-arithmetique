@@ -1,4 +1,3 @@
-// Move existing Subtraction.tsx content here
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,7 @@ const Subtraction = () => {
   const [numbers, setNumbers] = useState({ top: 0, bottom: 0 });
   const [userAnswer, setUserAnswer] = useState(['', '', '', '']);
   const [borrows, setBorrows] = useState(['', '', '']);
+  const [lowerBorrows, setLowerBorrows] = useState(['', '', '']); // New state for lower borrow inputs
   const [message, setMessage] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
@@ -33,6 +33,12 @@ const Subtraction = () => {
     const newBorrows = [...borrows];
     newBorrows[index] = value;
     setBorrows(newBorrows);
+  };
+
+  const handleLowerBorrowInput = (index: number, value: string) => {
+    const newLowerBorrows = [...lowerBorrows];
+    newLowerBorrows[index] = value;
+    setLowerBorrows(newLowerBorrows);
   };
 
   const handleAnswerInput = (index: number, value: string) => {
@@ -106,7 +112,7 @@ const Subtraction = () => {
       <Card className="max-w-2xl mx-auto bg-[#FFF8DC]">
         <CardContent className="p-6">
           <div className="grid grid-cols-4 gap-2 text-center text-2xl mb-4">
-            {/* Borrows */}
+            {/* Upper Borrows */}
             <div className="col-span-4 grid grid-cols-4 gap-1 mb-2">
               {borrows.map((borrow, index) => (
                 <input
@@ -132,12 +138,21 @@ const Subtraction = () => {
               <div className="absolute left-[-2rem] top-[3.7rem] text-2xl">-</div>
               <div className="col-span-4 grid grid-cols-4 gap-1">
                 {numbers.bottom.toString().padStart(4, '0').split('').map((digit, index) => (
-                  <div key={`bottom-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white">
+                  <div key={`bottom-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white relative">
                     {digit}
+                    {/* Lower borrow inputs */}
+                    <input
+                      key={`lower-borrow-${index}`}
+                      type="text"
+                      maxLength={1}
+                      className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-6 h-6 text-center border rounded text-sm"
+                      value={lowerBorrows[index]}
+                      onChange={(e) => handleLowerBorrowInput(index, e.target.value)}
+                    />
                   </div>
                 ))}
               </div>
-              <div className="col-span-4 border-b-2 border-black mt-2"></div>
+              <div className="col-span-4 border-b-2 border-black mt-6"></div>
             </div>
 
             {/* Answer inputs */}
@@ -173,6 +188,7 @@ const Subtraction = () => {
                   setQuestionNumber(questionNumber + 1);
                   setUserAnswer(['', '', '', '']);
                   setBorrows(['', '', '']);
+                  setLowerBorrows(['', '', '']);
                   setMessage('');
                   setAttempts(0);
                 }} className="bg-blue-600 hover:bg-blue-700">
