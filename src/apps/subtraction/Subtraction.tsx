@@ -11,18 +11,19 @@ const Subtraction = () => {
   const [numbers, setNumbers] = useState({ top: 0, bottom: 0 });
   const [userAnswer, setUserAnswer] = useState(['', '', '', '']);
   const [borrows, setBorrows] = useState(['', '', '']);
-  const [lowerBorrows, setLowerBorrows] = useState(['', '', '']); // New state for lower borrow inputs
+  const [lowerBorrows, setLowerBorrows] = useState(['', '', '']);
   const [message, setMessage] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [showContinue, setShowContinue] = useState(false);
 
   const generateNumbers = () => {
-    // Generate a larger number for the top (minuend)
-    const top = Math.floor(Math.random() * 9000) + 1000; // Between 1000 and 9999
-    // Generate a smaller number for the bottom (subtrahend)
-    const bottom = Math.floor(Math.random() * (top - 100)) + 100; // Ensures bottom is smaller than top
+    const top = Math.floor(Math.random() * 9000) + 1000;
+    const bottom = Math.floor(Math.random() * (top - 100)) + 100;
     setNumbers({ top, bottom });
+    // Reset borrows and lower borrows when generating new numbers
+    setBorrows(['', '', '']);
+    setLowerBorrows(['', '', '']);
   };
 
   useEffect(() => {
@@ -88,6 +89,7 @@ const Subtraction = () => {
     setIsComplete(false);
     setUserAnswer(['', '', '', '']);
     setBorrows(['', '', '']);
+    setLowerBorrows(['', '', '']);
     setMessage('');
     setAttempts(0);
     setShowContinue(false);
