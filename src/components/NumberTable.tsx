@@ -9,6 +9,11 @@ interface NumberTableProps {
 }
 
 const NumberTable = ({ number, onDigitInput, userInputMode = true, userDigits = [] }: NumberTableProps) => {
+  const handleDigitInput = (index: number, value: string) => {
+    if (!/^\d*$/.test(value)) return;
+    onDigitInput(index, value);
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md p-4">
       <table className="w-full border-collapse">
@@ -46,13 +51,19 @@ const NumberTable = ({ number, onDigitInput, userInputMode = true, userDigits = 
           <tr>
             {Array(12).fill('').map((_, index) => (
               <td key={index} className="border p-2">
-                <Input
-                  type="text"
-                  maxLength={1}
-                  className="w-12 h-12 text-center text-xl"
-                  value={userInputMode ? (userDigits[index] || '') : ''}
-                  onChange={(e) => onDigitInput(index, e.target.value)}
-                />
+                {userInputMode ? (
+                  <Input
+                    type="text"
+                    maxLength={1}
+                    className="w-12 h-12 text-center text-xl"
+                    value={userDigits[index] || ''}
+                    onChange={(e) => handleDigitInput(index, e.target.value)}
+                  />
+                ) : (
+                  <div className="w-12 h-12 flex items-center justify-center text-xl">
+                    {number.split(' ').join('')[index] || ''}
+                  </div>
+                )}
               </td>
             ))}
           </tr>

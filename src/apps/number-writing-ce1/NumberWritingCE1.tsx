@@ -16,6 +16,7 @@ const NumberWritingCE1 = () => {
   const [message, setMessage] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [userDigits, setUserDigits] = useState<string[]>([]);
 
   const generateNumber = () => {
     const max = 999;  // Changed to 999 for numbers less than 1000
@@ -32,6 +33,7 @@ const NumberWritingCE1 = () => {
     const newNumber = generateNumber();
     setCurrentNumber(newNumber.asString);
     setCurrentNumberInWords(newNumber.asWords);
+    setUserDigits(Array(12).fill(''));
   }, [questionNumber]);
 
   const validateNumberFormat = (input: string): boolean => {
@@ -102,6 +104,12 @@ const NumberWritingCE1 = () => {
     setCurrentNumberInWords(newNumber.asWords);
   };
 
+  const handleDigitInput = (index: number, value: string) => {
+    const newDigits = [...userDigits];
+    newDigits[index] = value;
+    setUserDigits(newDigits);
+  };
+
   return (
     <div className="min-h-screen bg-white p-4">
       <div className="bg-gray-200 p-4 mb-6">
@@ -122,8 +130,9 @@ const NumberWritingCE1 = () => {
       <div className="max-w-4xl mx-auto space-y-6">
         <NumberTable 
           number=""
-          onDigitInput={() => {}}
-          userInputMode={false}
+          onDigitInput={handleDigitInput}
+          userInputMode={true}
+          userDigits={userDigits}
         />
 
         <div className="space-y-4">

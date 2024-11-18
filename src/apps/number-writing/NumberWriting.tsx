@@ -16,6 +16,7 @@ const NumberWriting = () => {
   const [message, setMessage] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [userDigits, setUserDigits] = useState<string[]>([]);
 
   const generateNumber = () => {
     const max = 100000;
@@ -32,6 +33,7 @@ const NumberWriting = () => {
     const newNumber = generateNumber();
     setCurrentNumber(newNumber.asString);
     setCurrentNumberInWords(newNumber.asWords);
+    setUserDigits(Array(12).fill(''));
   }, [questionNumber]);
 
   const validateNumberFormat = (input: string): boolean => {
@@ -100,6 +102,13 @@ const NumberWriting = () => {
     const newNumber = generateNumber();
     setCurrentNumber(newNumber.asString);
     setCurrentNumberInWords(newNumber.asWords);
+    setUserDigits(Array(12).fill(''));
+  };
+
+  const handleDigitInput = (index: number, value: string) => {
+    const newDigits = [...userDigits];
+    newDigits[index] = value;
+    setUserDigits(newDigits);
   };
 
   return (
@@ -121,9 +130,10 @@ const NumberWriting = () => {
 
       <div className="max-w-4xl mx-auto space-y-6">
         <NumberTable 
-          number=""
-          onDigitInput={() => {}}
-          userInputMode={false}
+          number={currentNumber}
+          onDigitInput={handleDigitInput}
+          userInputMode={true}
+          userDigits={userDigits}
         />
 
         <div className="space-y-4">
