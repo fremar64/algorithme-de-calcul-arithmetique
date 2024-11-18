@@ -14,6 +14,12 @@ import NumberWritingCM1 from "./apps/number-writing-cm1/NumberWritingCM1";
 import NumberWritingCM2 from "./apps/number-writing-cm2/NumberWritingCM2";
 import MultiplicationCE2 from "./apps/multiplication-ce2/MultiplicationCE2";
 import MultiplicationCE1 from "./apps/multiplication-ce1/MultiplicationCE1";
+import OrderingNumbersCP1 from "./apps/ordering-numbers-cp1/OrderingNumbersCP1";
+import OrderingNumbersCP2 from "./apps/ordering-numbers-cp2/OrderingNumbersCP2";
+import OrderingNumbersCE1 from "./apps/ordering-numbers-ce1/OrderingNumbersCE1";
+import OrderingNumbersCE2 from "./apps/ordering-numbers-ce2/OrderingNumbersCE2";
+import OrderingNumbersCM1 from "./apps/ordering-numbers-cm1/OrderingNumbersCM1";
+import OrderingNumbersCM2 from "./apps/ordering-numbers-cm2/OrderingNumbersCM2";
 import Home from "./pages/Home";
 
 const queryClient = new QueryClient();
@@ -37,6 +43,12 @@ const App = () => (
           <Route path="/number-writing-cm2" element={<NumberWritingCM2 />} />
           <Route path="/multiplication-ce2" element={<MultiplicationCE2 />} />
           <Route path="/multiplication-ce1" element={<MultiplicationCE1 />} />
+          <Route path="/ordering-numbers-cp1" element={<OrderingNumbersCP1 />} />
+          <Route path="/ordering-numbers-cp2" element={<OrderingNumbersCP2 />} />
+          <Route path="/ordering-numbers-ce1" element={<OrderingNumbersCE1 />} />
+          <Route path="/ordering-numbers-ce2" element={<OrderingNumbersCE2 />} />
+          <Route path="/ordering-numbers-cm1" element={<OrderingNumbersCM1 />} />
+          <Route path="/ordering-numbers-cm2" element={<OrderingNumbersCM2 />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

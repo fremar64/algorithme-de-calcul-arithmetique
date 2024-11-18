@@ -74,6 +74,36 @@ const Home = () => {
               Écrire les nombres en chiffres (CM2)
             </Button>
           </Link>
+          <Link to="/ordering-numbers-cp1">
+            <Button className="w-full h-32 text-lg">
+              Ranger les nombres (CP1)
+            </Button>
+          </Link>
+          <Link to="/ordering-numbers-cp2">
+            <Button className="w-full h-32 text-lg">
+              Ranger les nombres (CP2)
+            </Button>
+          </Link>
+          <Link to="/ordering-numbers-ce1">
+            <Button className="w-full h-32 text-lg">
+              Ranger les nombres (CE1)
+            </Button>
+          </Link>
+          <Link to="/ordering-numbers-ce2">
+            <Button className="w-full h-32 text-lg">
+              Ranger les nombres (CE2)
+            </Button>
+          </Link>
+          <Link to="/ordering-numbers-cm1">
+            <Button className="w-full h-32 text-lg">
+              Ranger les nombres (CM1)
+            </Button>
+          </Link>
+          <Link to="/ordering-numbers-cm2">
+            <Button className="w-full h-32 text-lg">
+              Ranger les nombres (CM2)
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
