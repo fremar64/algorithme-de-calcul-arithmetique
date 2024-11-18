@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Addition from "./apps/addition/Index";
 import Subtraction from "./apps/subtraction/Subtraction";
+import SubtractionCP2 from "./apps/subtraction-cp2/SubtractionCP2";
+import SubtractionCE1 from "./apps/subtraction-ce1/SubtractionCE1";
+import SubtractionCM1 from "./apps/subtraction-cm1/SubtractionCM1";
 import PlaceValue from "./apps/place-value/PlaceValue";
 import PlaceValueSmall from "./apps/place-value-small/PlaceValueSmall";
 import NumberWriting from "./apps/number-writing/NumberWriting";
@@ -34,6 +37,9 @@ const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="/addition" element={<Addition />} />
           <Route path="/subtraction" element={<Subtraction />} />
+          <Route path="/subtraction-cp2" element={<SubtractionCP2 />} />
+          <Route path="/subtraction-ce1" element={<SubtractionCE1 />} />
+          <Route path="/subtraction-cm1" element={<SubtractionCM1 />} />
           <Route path="/place-value" element={<PlaceValue />} />
           <Route path="/place-value-small" element={<PlaceValueSmall />} />
           <Route path="/number-writing" element={<NumberWriting />} />
