@@ -101,8 +101,13 @@ const SubtractionGame: React.FC<SubtractionGameProps> = ({ maxNumber, title }) =
     generateNumbers();
   };
 
-  const getDigits = (num: number): string[] => {
-    return num.toString().padStart(6, '0').split('');
+  const formatNumber = (num: number): string[] => {
+    return num.toString().padStart(6, '0').split('').map((digit, index) => {
+      if (digit === '0' && index < 5 && num.toString().padStart(6, '0').slice(index + 1).match(/[1-9]/)) {
+        return '';
+      }
+      return digit;
+    });
   };
 
   return (
@@ -138,7 +143,7 @@ const SubtractionGame: React.FC<SubtractionGameProps> = ({ maxNumber, title }) =
 
             <div className="col-span-6 grid grid-cols-6 gap-1 mb-4 relative">
               <div className="col-span-6 grid grid-cols-6 gap-1">
-                {getDigits(numbers.top).map((digit, index) => (
+                {formatNumber(numbers.top).map((digit, index) => (
                   <div key={`top-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white">
                     {digit}
                   </div>
@@ -146,7 +151,7 @@ const SubtractionGame: React.FC<SubtractionGameProps> = ({ maxNumber, title }) =
               </div>
               <div className="absolute left-[-2rem] top-[3.7rem] text-2xl">-</div>
               <div className="col-span-6 grid grid-cols-6 gap-1">
-                {getDigits(numbers.bottom).map((digit, index) => (
+                {formatNumber(numbers.bottom).map((digit, index) => (
                   <div key={`bottom-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white relative">
                     {digit}
                     <input
