@@ -9,9 +9,9 @@ const Subtraction = () => {
   const [score, setScore] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [numbers, setNumbers] = useState({ top: 0, bottom: 0 });
-  const [userAnswer, setUserAnswer] = useState(['', '', '', '']);
-  const [borrows, setBorrows] = useState(['', '', '']);
-  const [lowerBorrows, setLowerBorrows] = useState(['', '', '']);
+  const [userAnswer, setUserAnswer] = useState(['', '', '', '', '', '']);
+  const [borrows, setBorrows] = useState(['', '', '', '', '']);
+  const [lowerBorrows, setLowerBorrows] = useState(['', '', '', '', '']);
   const [message, setMessage] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
@@ -21,9 +21,8 @@ const Subtraction = () => {
     const top = Math.floor(Math.random() * 9000) + 1000;
     const bottom = Math.floor(Math.random() * (top - 100)) + 100;
     setNumbers({ top, bottom });
-    // Reset borrows and lower borrows when generating new numbers
-    setBorrows(['', '', '']);
-    setLowerBorrows(['', '', '']);
+    setBorrows(['', '', '', '', '']);
+    setLowerBorrows(['', '', '', '', '']);
   };
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const Subtraction = () => {
   };
 
   const checkAnswer = () => {
-    const correctAnswer = (numbers.top - numbers.bottom).toString().padStart(4, '0');
+    const correctAnswer = (numbers.top - numbers.bottom).toString().padStart(6, '0');
     const userAnswerString = userAnswer.join('');
     
     if (userAnswerString === '') {
@@ -65,8 +64,9 @@ const Subtraction = () => {
       } else {
         setTimeout(() => {
           setQuestionNumber(questionNumber + 1);
-          setUserAnswer(['', '', '', '']);
-          setBorrows(['', '', '']);
+          setUserAnswer(['', '', '', '', '', '']);
+          setBorrows(['', '', '', '', '']);
+          setLowerBorrows(['', '', '', '', '']);
           setMessage('');
           setAttempts(0);
         }, 1500);
@@ -87,9 +87,9 @@ const Subtraction = () => {
     setScore(0);
     setQuestionNumber(1);
     setIsComplete(false);
-    setUserAnswer(['', '', '', '']);
-    setBorrows(['', '', '']);
-    setLowerBorrows(['', '', '']);
+    setUserAnswer(['', '', '', '', '', '']);
+    setBorrows(['', '', '', '', '']);
+    setLowerBorrows(['', '', '', '', '']);
     setMessage('');
     setAttempts(0);
     setShowContinue(false);
@@ -101,7 +101,7 @@ const Subtraction = () => {
       <div className="bg-gray-200 p-4 mb-6">
         <div className="flex items-center gap-4 max-w-2xl mx-auto">
           <img 
-            src="/ceredis-logo.svg" 
+            src="/ceredis.png" 
             alt="Ceredis Logo" 
             className="h-12 w-auto"
           />
@@ -113,9 +113,8 @@ const Subtraction = () => {
 
       <Card className="max-w-2xl mx-auto bg-[#FFF8DC]">
         <CardContent className="p-6">
-          <div className="grid grid-cols-4 gap-2 text-center text-2xl mb-4">
-            {/* Upper Borrows */}
-            <div className="col-span-4 grid grid-cols-4 gap-1 mb-2">
+          <div className="grid grid-cols-6 gap-2 text-center text-2xl mb-4">
+            <div className="col-span-6 grid grid-cols-6 gap-1 mb-2">
               {borrows.map((borrow, index) => (
                 <input
                   key={`borrow-${index}`}
@@ -128,21 +127,19 @@ const Subtraction = () => {
               ))}
             </div>
 
-            {/* Numbers display grid */}
-            <div className="col-span-4 grid grid-cols-4 gap-1 mb-4 relative">
-              <div className="col-span-4 grid grid-cols-4 gap-1">
-                {numbers.top.toString().padStart(4, '0').split('').map((digit, index) => (
+            <div className="col-span-6 grid grid-cols-6 gap-1 mb-4 relative">
+              <div className="col-span-6 grid grid-cols-6 gap-1">
+                {numbers.top.toString().padStart(6, '0').split('').map((digit, index) => (
                   <div key={`top-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white">
                     {digit}
                   </div>
                 ))}
               </div>
               <div className="absolute left-[-2rem] top-[3.7rem] text-2xl">-</div>
-              <div className="col-span-4 grid grid-cols-4 gap-1">
-                {numbers.bottom.toString().padStart(4, '0').split('').map((digit, index) => (
+              <div className="col-span-6 grid grid-cols-6 gap-1">
+                {numbers.bottom.toString().padStart(6, '0').split('').map((digit, index) => (
                   <div key={`bottom-${index}`} className="w-12 h-12 border rounded flex items-center justify-center bg-white relative">
                     {digit}
-                    {/* Lower borrow inputs */}
                     <input
                       key={`lower-borrow-${index}`}
                       type="text"
@@ -154,11 +151,10 @@ const Subtraction = () => {
                   </div>
                 ))}
               </div>
-              <div className="col-span-4 border-b-2 border-black mt-6"></div>
+              <div className="col-span-6 border-b-2 border-black mt-6"></div>
             </div>
 
-            {/* Answer inputs */}
-            <div className="col-span-4 grid grid-cols-4 gap-1">
+            <div className="col-span-6 grid grid-cols-6 gap-1">
               {userAnswer.map((digit, index) => (
                 <input
                   key={`answer-${index}`}
@@ -188,9 +184,9 @@ const Subtraction = () => {
                 <Button onClick={() => {
                   setShowContinue(false);
                   setQuestionNumber(questionNumber + 1);
-                  setUserAnswer(['', '', '', '']);
-                  setBorrows(['', '', '']);
-                  setLowerBorrows(['', '', '']);
+                  setUserAnswer(['', '', '', '', '', '']);
+                  setBorrows(['', '', '', '', '']);
+                  setLowerBorrows(['', '', '', '', '']);
                   setMessage('');
                   setAttempts(0);
                 }} className="bg-blue-600 hover:bg-blue-700">
