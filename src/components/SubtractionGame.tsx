@@ -32,7 +32,7 @@ const SubtractionGame: React.FC<SubtractionGameProps> = ({ maxNumber, title }) =
 
   useEffect(() => {
     generateNumbers();
-  }, [questionNumber]);
+  }, [questionNumber, maxNumber]);
 
   const handleBorrowInput = (index: number, value: string) => {
     const newBorrows = [...borrows];
@@ -53,7 +53,9 @@ const SubtractionGame: React.FC<SubtractionGameProps> = ({ maxNumber, title }) =
   };
 
   const normalizeNumber = (num: string): string => {
-    return parseInt(num).toString();
+    if (!num) return '0';
+    const parsed = parseInt(num.replace(/\s/g, '') || '0');
+    return isNaN(parsed) ? '0' : parsed.toString();
   };
 
   const checkAnswer = () => {
@@ -94,8 +96,9 @@ const SubtractionGame: React.FC<SubtractionGameProps> = ({ maxNumber, title }) =
   };
 
   const formatNumber = (num: number): string[] => {
-    return num.toString().padStart(6, '0').split('').map((digit, index) => {
-      if (digit === '0' && index < 5 && num.toString().padStart(6, '0').slice(index + 1).match(/[1-9]/)) {
+    const numStr = num.toString().padStart(6, '0');
+    return numStr.split('').map((digit, index) => {
+      if (digit === '0' && index < 5 && numStr.slice(index + 1).match(/[1-9]/)) {
         return '';
       }
       return digit;
