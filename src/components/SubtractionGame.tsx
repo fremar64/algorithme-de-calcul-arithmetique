@@ -52,16 +52,20 @@ const SubtractionGame: React.FC<SubtractionGameProps> = ({ maxNumber, title }) =
     setUserAnswer(newAnswer);
   };
 
+  const normalizeNumber = (num: string): string => {
+    return parseInt(num).toString();
+  };
+
   const checkAnswer = () => {
-    const correctAnswer = (numbers.top - numbers.bottom).toString().padStart(6, '0');
-    const userAnswerString = userAnswer.join('');
+    const correctAnswer = (numbers.top - numbers.bottom).toString();
+    const userAnswerString = userAnswer.join('').replace(/^0+/, '');
     
     if (userAnswerString === '') {
       setMessage("Effectue la soustraction !");
       return;
     }
 
-    if (userAnswerString === correctAnswer) {
+    if (normalizeNumber(userAnswerString) === correctAnswer) {
       setMessage('Bravo !');
       setScore(score + 1);
       if (questionNumber === 5) {
@@ -83,9 +87,19 @@ const SubtractionGame: React.FC<SubtractionGameProps> = ({ maxNumber, title }) =
       } else {
         setMessage('Regarde bien la correction...');
         setShowContinue(true);
-        setUserAnswer(correctAnswer.split(''));
+        const correctionArray = correctAnswer.padStart(6, ' ').split('');
+        setUserAnswer(correctionArray);
       }
     }
+  };
+
+  const formatNumber = (num: number): string[] => {
+    return num.toString().padStart(6, '0').split('').map((digit, index) => {
+      if (digit === '0' && index < 5 && num.toString().padStart(6, '0').slice(index + 1).match(/[1-9]/)) {
+        return '';
+      }
+      return digit;
+    });
   };
 
   const restart = () => {
@@ -99,15 +113,6 @@ const SubtractionGame: React.FC<SubtractionGameProps> = ({ maxNumber, title }) =
     setAttempts(0);
     setShowContinue(false);
     generateNumbers();
-  };
-
-  const formatNumber = (num: number): string[] => {
-    return num.toString().padStart(6, '0').split('').map((digit, index) => {
-      if (digit === '0' && index < 5 && num.toString().padStart(6, '0').slice(index + 1).match(/[1-9]/)) {
-        return '';
-      }
-      return digit;
-    });
   };
 
   return (
