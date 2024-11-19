@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Addition from "./apps/addition/Index";
 import Subtraction from "./apps/subtraction/Subtraction";
 import SubtractionCP2 from "./apps/subtraction-cp2/SubtractionCP2";
@@ -55,6 +55,7 @@ const App = () => (
           <Route path="/ordering-numbers-ce2" element={<OrderingNumbersCE2 />} />
           <Route path="/ordering-numbers-cm1" element={<OrderingNumbersCM1 />} />
           <Route path="/ordering-numbers-cm2" element={<OrderingNumbersCM2 />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
