@@ -23,6 +23,7 @@ import OrderingNumbersCE1 from "./apps/ordering-numbers-ce1/OrderingNumbersCE1";
 import OrderingNumbersCE2 from "./apps/ordering-numbers-ce2/OrderingNumbersCE2";
 import OrderingNumbersCM1 from "./apps/ordering-numbers-cm1/OrderingNumbersCM1";
 import OrderingNumbersCM2 from "./apps/ordering-numbers-cm2/OrderingNumbersCM2";
+import RecompositionNumbersCP2 from "./apps/recomposition-numbers-cp2/RecompositionNumbersCP2";
 import Home from "./pages/Home";
 
 const queryClient = new QueryClient();
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="/ordering-numbers-ce2" element={<OrderingNumbersCE2 />} />
           <Route path="/ordering-numbers-cm1" element={<OrderingNumbersCM1 />} />
           <Route path="/ordering-numbers-cm2" element={<OrderingNumbersCM2 />} />
+          <Route path="/recomposition-numbers-cp2" element={<RecompositionNumbersCP2 />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
