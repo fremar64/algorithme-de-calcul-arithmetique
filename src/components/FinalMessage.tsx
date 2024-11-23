@@ -6,14 +6,14 @@ interface FinalMessageProps {
 }
 
 export const getFinalMessage = (score: number): string => {
-  if (score === 5) {
+  if (score === 10) {
     return "Performance très satisfaisante !";
-  } else if (score >= 4) {
+  } else if (score >= 8) {
     return "Performance satisfaisante !";
-  } else if (score >= 2) {
-    return "Performance insuffisante ! Clique sur Recommencer.";
+  } else if (score >= 5) {
+    return "Performance insuffisante !";
   } else {
-    return "Performance très insuffisante ! Clique sur Recommencer.";
+    return "Performance très insuffisante !";
   }
 };
 
