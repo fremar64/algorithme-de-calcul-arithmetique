@@ -1,5 +1,3 @@
-import { Alert, AlertDescription } from "@/components/ui/alert";
-
 interface FinalMessageProps {
   score: number;
   isComplete: boolean;
@@ -19,11 +17,11 @@ export const getFinalMessage = (score: number): string => {
 
 const FinalMessage = ({ score, isComplete }: FinalMessageProps) => {
   if (!isComplete) return null;
-
+  
   return (
-    <Alert className="mt-4 max-w-2xl mx-auto">
-      <AlertDescription>{getFinalMessage(score)}</AlertDescription>
-    </Alert>
+    <div className="mt-4 text-center">
+      <p className="text-lg font-semibold">{getFinalMessage(score)}</p>
+    </div>
   );
 };
 
